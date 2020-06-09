@@ -1,0 +1,42 @@
+---
+- name: Configure repositories on All Hosts
+  hosts: all
+  gather_facts: false
+  become: true
+  roles:
+    - configure-repos
+
+- name: Install and configure HAProxy 
+  hosts: frontends
+  gather_facts: false
+  become: true
+  roles:
+    - deploy-haproxy
+
+- name: Install and configure Tomcat
+  hosts: apps
+  gather_facts: false
+  become: true
+  roles:
+    - deploy-tomcat
+
+- name: Confifure tomcat on APP2 Server
+  hosts: app2
+  gather_facts: false
+  become: true
+  roles:
+    - app2-tomcat-config
+
+- name: Install and Configure Postgres Database
+  hosts: appdbs
+  gather_facts: false
+  become: true
+  roles:
+    - deploy-postgres 
+
+- name: Install and configure Apache Web Server 
+  hosts: apps
+  gather_facts: false
+  become: true
+  roles:
+    - deploy-apache

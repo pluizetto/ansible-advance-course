@@ -1,0 +1,12 @@
+---
+- name: Install Apache Package
+  yum:
+    name: httpd
+    state: latest
+  
+- name: Start and enable apache to start at boot time
+  service:
+    name: httpd.service
+    state: started
+    enabled: yes
+

@@ -1,0 +1,20 @@
+---
+- name: Install necessary packages
+  yum:
+    name:
+      - httpie
+      - haproxy
+    state: latest
+
+- name: Start and enable HAproxy Service to start at boot time
+  service: 
+    name: haproxy.service
+    state: started
+    enabled: yes
+
+- name: Deliver the haproxy.cfg template file to target hosts
+  template:
+    src: templates/haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+  notify: restart haproxy service
+

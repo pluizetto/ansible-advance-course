@@ -1,0 +1,12 @@
+---
+- name: Create directory structure to index.html file of APP2 Server 
+  file:
+    path: /usr/share/tomcat/webapps/ansible/
+    state: directory
+
+- name: Deliver index.html template file to APP2 Server
+  template:
+    src: templates/index.html.app2
+    dest: /usr/share/tomcat/webapps/ansible/index.html
+    mode: 0644
+  notify: restart tomcat service

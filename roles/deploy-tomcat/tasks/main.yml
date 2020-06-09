@@ -1,0 +1,24 @@
+---
+- name: Install necessary packages
+  yum:
+    name: tomcat
+    state: latest
+
+- name: Start and enable tomcat.service to start at boot time
+  service:
+    name: tomcat.service
+    state: started
+    enabled: yes
+
+- name: Create directory structure to index.html file
+  file:
+    path: /usr/share/tomcat/webapps/ROOT
+    state: directory
+
+- name: Deliver index.html template file to the target host
+  template:
+    src: templates/index.html.j2
+    dest: /usr/share/tomcat/webapps/ROOT/index.html
+    mode: 0644
+  notify: restart tomcat service
+
